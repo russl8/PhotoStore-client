@@ -1,28 +1,27 @@
 import React from "react"
 import PhotoCard from "./PhotoCard";
-import {nanoid} from "nanoid";
+import { nanoid } from "nanoid";
+import ImageForm from "./ImageForm";
 
-const Home = () => {
-    //fetch all posts for now 
-    //LATER: ALL POSTS BY SIGNED IN USER
-    //then display
+interface homeProps {
+    backendUrl: string;
+}
+
+
+const Home: React.FC<homeProps> = ({ backendUrl }) => {
     const [allPhotos, setAllPhotos] = React.useState<any[]>([]);
 
     React.useEffect(() => {
         // Fetch backend to get photo with the specified id
-        fetch(`http://localhost:8080/photo/all`)
+        fetch(backendUrl + `photo/all`)
             .then(response => response.json())
             .then(data => {
                 setAllPhotos(data);
-                for (let photo of data) {
-                    // console.log(photo.body);
-                }
             })
             .catch(error => {
                 console.error("Error fetching photo:", error);
             });
     }, []);
-
 
 
     return (
@@ -33,6 +32,7 @@ const Home = () => {
                     imageSrc={`data:imadwge/jpeg;base64,${photo.body.image}`}
                     title={photo.body.title} />
             ))}
+            <ImageForm backendUrl={backendUrl} />
 
         </div>
     );
