@@ -2,9 +2,10 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 
 interface imageFormProps {
     backendUrl: string;
+    fetchPhotos: ()=>void;
 }
 
-const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
+const ImageForm: React.FC<imageFormProps> = ({ backendUrl,fetchPhotos }) => {
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [title, setTitle] = useState<string>("");
     const [userid, setUserid] = useState<string>("6552e9e91bf5e44bccb5b5f8");
@@ -39,6 +40,8 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
 
             if (response.ok) {
                 console.log("Image, title, and userid uploaded successfully");
+                //update displayed photos
+                fetchPhotos();
             } else {
                 console.error("Failed to upload image, title, and userid");
             }

@@ -9,12 +9,16 @@ interface homeProps {
 }
 
 
+/**
+ * 
+ * @param param0 
+ * @returns 
+ */
 const Home: React.FC<homeProps> = ({ backendUrl }) => {
     const [allPhotos, setAllPhotos] = React.useState<any[]>([]);
 
-
-    React.useEffect(() => {
-        // Fetch backend to get photo with the specified id
+    //fetch photos again to display updated photos after addition/deletion
+    const fetchPhotos = () => {
         fetch(backendUrl + `photo/all`)
             .then(response => response.json())
             .then(data => {
@@ -23,22 +27,41 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
             .catch(error => {
                 console.error("Error fetching photo:", error);
             });
+    }
+
+    const removePhoto = (imageId: String) => {
+        for (let photo of allPhotos) {
+            if (photo.body.photoId === imageId) {
+                photo = null;
+                fetchPhotos();
+            }
+        }
+    }
+
+    React.useEffect(() => {
+        // Fetch backend to get photo with the specified id
+        fetchPhotos();
     }, []);
 
 
     return (
         <Fragment>
-
             <div>
                 {allPhotos.map(photo => (
                     <PhotoCard
                         key={nanoid()}
                         imageSrc={`data:imadwge/jpeg;base64,${photo.body.image}`}
-                        title={photo.body.title} 
-                        />
-                        
+                        title={photo.body.title}
+                        imageId={photo.body.photoId}
+                        backendUrl={backendUrl}
+                        removePhoto={removePhoto}
+                    />
+
                 ))}
-                <ImageForm backendUrl={backendUrl} />
+                <ImageForm
+                 backendUrl={backendUrl}
+                 fetchPhotos={fetchPhotos}
+                  />
 
             </div>
         </Fragment>
