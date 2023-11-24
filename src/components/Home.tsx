@@ -1,7 +1,8 @@
-import React from "react"
+import React, { Fragment } from "react"
 import PhotoCard from "./PhotoCard";
 import { nanoid } from "nanoid";
 import ImageForm from "./ImageForm";
+import PhotoModal from "./PhotoModal";
 
 interface homeProps {
     backendUrl: string;
@@ -10,6 +11,7 @@ interface homeProps {
 
 const Home: React.FC<homeProps> = ({ backendUrl }) => {
     const [allPhotos, setAllPhotos] = React.useState<any[]>([]);
+
 
     React.useEffect(() => {
         // Fetch backend to get photo with the specified id
@@ -25,16 +27,22 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
 
 
     return (
-        <div>
-            {allPhotos.map(photo => (
-                <PhotoCard
-                    key={nanoid()}
-                    imageSrc={`data:imadwge/jpeg;base64,${photo.body.image}`}
-                    title={photo.body.title} />
-            ))}
-            <ImageForm backendUrl={backendUrl} />
+        <Fragment>
 
-        </div>
+            <div>
+                {allPhotos.map(photo => (
+                    <PhotoCard
+                        key={nanoid()}
+                        imageSrc={`data:imadwge/jpeg;base64,${photo.body.image}`}
+                        title={photo.body.title} 
+                        />
+                        
+                ))}
+                <ImageForm backendUrl={backendUrl} />
+
+            </div>
+        </Fragment>
+
     );
 }
 
