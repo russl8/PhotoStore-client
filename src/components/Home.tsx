@@ -8,12 +8,6 @@ interface homeProps {
     backendUrl: string;
 }
 
-
-/**
- * 
- * @param param0 
- * @returns 
- */
 const Home: React.FC<homeProps> = ({ backendUrl }) => {
     const [allPhotos, setAllPhotos] = React.useState<any[]>([]);
 
@@ -45,26 +39,33 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
 
 
     return (
-        <Fragment>
-            <div>
-                {allPhotos.map(photo => (
-                    <PhotoCard
-                        key={nanoid()}
-                        imageSrc={`data:imadwge/jpeg;base64,${photo.body.image}`}
-                        title={photo.body.title}
-                        imageId={photo.body.photoId}
-                        backendUrl={backendUrl}
-                        removePhoto={removePhoto}
-                    />
-
-                ))}
-                <ImageForm
-                 backendUrl={backendUrl}
-                 fetchPhotos={fetchPhotos}
-                  />
-
+        <div className="flex flex-row h-full">
+            {/* sidebar */}
+            <div className="bg-slate-100 h-[100vh] w-[300px]">
+                
             </div>
-        </Fragment>
+
+            <div className = "flex flex-col w-full">
+                <div className="grid grid-cols-auto-fill gap-4">
+                    {allPhotos.map(photo => (
+                        <PhotoCard
+                            key={nanoid()}
+                            imageSrc={`data:image/jpeg;base64,${photo.body.image}`}
+                            title={photo.body.title}
+                            imageId={photo.body.photoId}
+                            backendUrl={backendUrl}
+                            removePhoto={removePhoto}
+                        />
+                    ))}
+                </div>
+
+                <ImageForm
+                    backendUrl={backendUrl}
+                    fetchPhotos={fetchPhotos}
+                />
+            </div>
+</div>
+
 
     );
 }
