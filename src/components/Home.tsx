@@ -3,6 +3,8 @@ import PhotoCard from "./PhotoCard";
 import { nanoid } from "nanoid";
 import ImageForm from "./ImageForm";
 import PhotoModal from "./PhotoModal";
+import HomeSidebar from "./HomeSidebar";
+import HomeHeader from "./HomeHeader";
 
 interface homeProps {
     backendUrl: string;
@@ -39,33 +41,33 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
 
 
     return (
-        <div className="flex flex-row h-full">
-            {/* sidebar */}
-            <div className="bg-slate-100 h-[100vh] w-[300px]">
-                
-            </div>
+        <>
+            <HomeHeader />
 
-            <div className = "flex flex-col w-full">
-                <div className="grid grid-cols-auto-fill gap-4">
-                    {allPhotos.map(photo => (
-                        <PhotoCard
-                            key={nanoid()}
-                            imageSrc={`data:image/jpeg;base64,${photo.body.image}`}
-                            title={photo.body.title}
-                            imageId={photo.body.photoId}
-                            backendUrl={backendUrl}
-                            removePhoto={removePhoto}
-                        />
-                    ))}
+            <div className="flex flex-row h-full bg-slate-50">
+                <HomeSidebar />
+
+                <div className="flex flex-col w-full  p-4 my-2 bg-white rounded-xl">
+                    <div className="grid grid-cols-auto-fill gap-0">
+                        {allPhotos.map(photo => (
+                            <PhotoCard
+                                key={nanoid()}
+                                imageSrc={`data:image/jpeg;base64,${photo.body.image}`}
+                                title={photo.body.title}
+                                imageId={photo.body.photoId}
+                                backendUrl={backendUrl}
+                                removePhoto={removePhoto}
+                            />
+                        ))}
+                    </div>
+
+                    <ImageForm
+                        backendUrl={backendUrl}
+                        fetchPhotos={fetchPhotos}
+                    />
                 </div>
-
-                <ImageForm
-                    backendUrl={backendUrl}
-                    fetchPhotos={fetchPhotos}
-                />
             </div>
-</div>
-
+        </>
 
     );
 }
