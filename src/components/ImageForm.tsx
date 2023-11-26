@@ -1,21 +1,17 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-
-
 import { Button } from "../@/components/ui/button";
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "../@/components/ui/form"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../@/components/ui/form"
 import { Input } from "../@/components/ui/input"
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
+
+interface imageFormProps {
+    backendUrl: string;
+}
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -26,27 +22,15 @@ const formSchema = z.object({
         .refine((file) => file === null, "Must include a file.")
 })
 
-
-interface imageFormProps {
-    backendUrl: string;
-    // fetchPhotos: () => void;
-}
-
 const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [title, setTitle] = useState<string>("");
     const [userid, setUserid] = useState<string>("6552e9e91bf5e44bccb5b5f8");
-
-    // 1. Define your form.
+    const navigate = useNavigate();
     const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            title: "",
-        },
     })
 
 
-    //change the selected image
     const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
             const file = event.target.files[0];
@@ -54,15 +38,12 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
         }
     };
 
-    //handle image submit
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (!(selectedImage && title)) {
             alert("Please select an image and title");
             return;
         }
-
-
         const formData = new FormData();
 
         //TODO: get current userid.
@@ -70,31 +51,33 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
         formData.append("title", title);
         formData.append("image", selectedImage);
 
-
-
         try {
             const response = await fetch(`${backendUrl}photo`, {
                 method: "POST",
                 body: formData,
             });
-
             if (response.ok) {
-                alert("Image, title, and userid uploaded successfully");
-                //update displayed photos
-                // fetchPhotos();
+                navigate("/");
             } else {
-                alert("Failed to upload image, title, and userid");
+                alert("Title and image fields must not be blank.");
             }
         } catch (error) {
-            alert("Error occurred while uploading");
+            alert("Error occurred while uploading.");
         }
     };
 
 
     return (
-        <>
+        <div className="flex flex-col items-center p-4 pt-8 w-[100vw] sm:pl-[75px] sm:flex-row sm:justify-around  sm:items-start">
             <Form {...form}>
                 <form onSubmit={handleSubmit} className="space-y-8 w-[250px]">
+                    <div className="flex flex-row">
+                        <Button className="mr-4" variant="outline" size="icon" onClick={() => { navigate("/") }} >
+                            <FontAwesomeIcon icon={faArrowLeft} className="text-black cursor-pointer" />
+                        </Button>
+                        <p className="font-bold text-2xl mb-6">Upload Image</p>
+                    </div>
+
                     <FormField
                         control={form.control}
                         name="title"
@@ -106,11 +89,7 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                     />
-
                                 </FormControl>
-                                {/* <FormDescription>
-                                    This is your public display name.
-                                </FormDescription> */}
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -124,7 +103,7 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
                                 <FormLabel>Photo</FormLabel>
                                 <FormControl>
                                     <Input
-                                        className ="hover:bg-gray-300 "
+                                        className="hover:bg-gray-300 "
                                         type="file"
                                         accept="image/*"
                                         name="image"
@@ -135,20 +114,38 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit">Submit</Button>
-                    {selectedImage && (
-                        <div>
-                            <img
-                                alt="not found"
-                                width={"250px"}
-                                src={URL.createObjectURL(selectedImage)}
-                            />
-                            <br />
-                        </div>
-                    )}
+                    <Button type="submit">Upload</Button>
                 </form>
             </Form>
-        </>
+
+            {/* small screen image preview */}
+            <div className="sm:hidden">
+                {selectedImage && (
+                    <div>
+                        <img
+                            className=" mt-4 h-[200px] max-w-[250px] border-slate-900 border-2"
+                            alt="not found"
+                            src={URL.createObjectURL(selectedImage)}
+                        />
+                        <br />
+                    </div>
+                )}
+            </div>
+
+            {/* large screen image preview */}
+            <div className="hidden sm:block align-middle">
+                {selectedImage && (
+                    <div>
+                        <img
+                            className=" mt-4 max-h-[350px] max-w-[750px] border-slate-900 border-2"
+                            alt="not found"
+                            src={URL.createObjectURL(selectedImage)}
+                        />
+                        <br />
+                    </div>
+                )}
+            </div>
+        </div>
     );
 };
 
