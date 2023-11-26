@@ -8,7 +8,6 @@ const HomeHeader = () => {
                     <FontAwesomeIcon icon={faImages} className="h-[25px] mr-2 " />
                     <p className=" font-semibold">PhotoStore</p>
                 </div>
-
         </div>
     );
 }

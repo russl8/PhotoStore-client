@@ -11,23 +11,17 @@ interface PhotoCardProps {
     backendUrl: string;
     removePhoto: (imageId: string) => void
 }
-
-
-
 const PhotoCard: React.FC<PhotoCardProps> = ({ title, imageSrc, imageId, backendUrl, removePhoto }) => {
     const [showModal, setShowModal] = React.useState(false);
     const handleDeleteImage = (e: any) => {
         e.stopPropagation();
-        // alert(imageId);
         fetch(`${backendUrl}photo/${imageId}`, { method: "DELETE" })
             .then(res => {
                 if (res.ok) {
                     alert("Photo " + imageId + " deleted.")
-                    //remove photo from the photos array.   
+                    //remove photo from the photos array to invoke page refresh   
                     removePhoto(imageId);
-
                 }
-
             })
             .catch(e => {
                 alert("Photo could not be deleted.")
@@ -37,14 +31,14 @@ const PhotoCard: React.FC<PhotoCardProps> = ({ title, imageSrc, imageId, backend
     return (
         <>
             <div className="flex flex-col w-[225px] justify-center rounded-lg px-2 py-4 mb-4 bg-slate-200 hover:bg-gray-300 hover:cursor-pointer"
+                // show photo modal when clicked
                 onClick={() => setShowModal(!showModal)} >
+
                 <div className="flex items-center text-centerborder-4 pb-4">
                     <FontAwesomeIcon icon={faImage} className=" text-red-600 h-5 mr-2" />
                     <div className="text-md font-semibold ">{title}</div>
-
                     <FontAwesomeIcon icon={faTrash} onClick={handleDeleteImage} />
                 </div>
-
 
 
                 <div className="overflow-hidden w-full">

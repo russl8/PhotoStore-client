@@ -29,6 +29,7 @@ const PhotoModal: React.FC<photoModalProps> = ({ isVisible, imageSrc, onClick, i
     return (
         <div className="fixed inset-0 bg-black bg-opacity-80" onClick={onClick}>
             <div className="relative h-full flex flex-col justify-center items-center">
+
                 {/* IMAGE */}
                 <div className="flex items-center justify-center h-full">
                     <img
@@ -43,8 +44,7 @@ const PhotoModal: React.FC<photoModalProps> = ({ isVisible, imageSrc, onClick, i
                 {/* HEADER */}
                 <div
                     className="absolute top-0 left-0 right-0 p-4 flex items-center justify-between bg-black bg-opacity-40"
-                    onClick={(e) => e.stopPropagation()}
-                >
+                    onClick={(e) => e.stopPropagation()}>
                     <FontAwesomeIcon icon={faArrowLeft} className="text-white cursor-pointer mr-8" onClick={onClick} />
                     <div className="flex items-center">
                         <FontAwesomeIcon icon={faImage} className="text-red-600 h-5 mr-2" />

@@ -8,7 +8,6 @@ interface homeProps {
 }
 
 const Home: React.FC<homeProps> = ({ backendUrl }) => {
-
     return (
         <>
             <HomeHeader />
