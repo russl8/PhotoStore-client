@@ -43,6 +43,8 @@ const PhotoDisplay: React.FC<photoDisplayProps> = ({backendUrl}) => {
 
     return (
         <div className="flex flex-col w-full  p-4 my-2 bg-white rounded-xl">
+            <p className="  mb-4 text-2xl font-semibold">Your Photos</p>
+
             <div className="grid grid-cols-auto-fill gap-0">
                 {allPhotos.map(photo => (
                     <PhotoCard
@@ -56,10 +58,7 @@ const PhotoDisplay: React.FC<photoDisplayProps> = ({backendUrl}) => {
                 ))}
             </div>
 
-            <ImageForm
-                backendUrl={backendUrl}
-                fetchPhotos={fetchPhotos}
-            />
+            
         </div>
 
     );

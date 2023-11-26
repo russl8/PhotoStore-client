@@ -36,7 +36,7 @@ const PhotoCard: React.FC<PhotoCardProps> = ({ title, imageSrc, imageId, backend
 
     return (
         <>
-            <div className="flex flex-col w-[225px] justify-center rounded-lg px-2 py-4 bg-slate-200 hover:bg-gray-300 hover:cursor-pointer"
+            <div className="flex flex-col w-[225px] justify-center rounded-lg px-2 py-4 mb-4 bg-slate-200 hover:bg-gray-300 hover:cursor-pointer"
                 onClick={() => setShowModal(!showModal)} >
                 <div className="flex items-center text-centerborder-4 pb-4">
                     <FontAwesomeIcon icon={faImage} className=" text-red-600 h-5 mr-2" />

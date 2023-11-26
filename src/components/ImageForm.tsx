@@ -29,10 +29,10 @@ const formSchema = z.object({
 
 interface imageFormProps {
     backendUrl: string;
-    fetchPhotos: () => void;
+    // fetchPhotos: () => void;
 }
 
-const ImageForm: React.FC<imageFormProps> = ({ backendUrl, fetchPhotos }) => {
+const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [title, setTitle] = useState<string>("");
     const [userid, setUserid] = useState<string>("6552e9e91bf5e44bccb5b5f8");
@@ -81,7 +81,7 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl, fetchPhotos }) => {
             if (response.ok) {
                 alert("Image, title, and userid uploaded successfully");
                 //update displayed photos
-                fetchPhotos();
+                // fetchPhotos();
             } else {
                 alert("Failed to upload image, title, and userid");
             }

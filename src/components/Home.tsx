@@ -12,10 +12,8 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
     return (
         <>
             <HomeHeader />
-
             <div className="flex flex-row h-full bg-slate-50">
                 <HomeSidebar />
-
                 <PhotoDisplay backendUrl={backendUrl} />
             </div>
         </>
