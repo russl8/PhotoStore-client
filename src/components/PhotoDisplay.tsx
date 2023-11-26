@@ -5,27 +5,15 @@ import { nanoid } from "nanoid";
 
 interface photoDisplayProps {
     backendUrl: string;
+    fetchPhotos: () => void;
+    allPhotos: any[];
 }
 
 
 
 
-const PhotoDisplay: React.FC<photoDisplayProps> = ({ backendUrl }) => {
-    const [allPhotos, setAllPhotos] = React.useState<any[]>([]);
-    React.useEffect(() => {
-        // Fetch backend to get photo with the specified id
-        fetchPhotos();
-    }, []);
-    const fetchPhotos = () => {
-        fetch(backendUrl + `photo/all`)
-            .then(response => response.json())
-            .then(data => {
-                setAllPhotos(data);
-            })
-            .catch(error => {
-                console.error("Error fetching photo:", error);
-            });
-    }
+const PhotoDisplay: React.FC<photoDisplayProps> = ({ backendUrl, fetchPhotos, allPhotos }) => {
+
     const removePhoto = (imageId: String) => {
         for (let photo of allPhotos) {
             if (photo.body.photoId === imageId) {

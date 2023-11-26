@@ -59,16 +59,16 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
             if (response.ok) {
                 navigate("/");
             } else {
-                alert("Title and image fields must not be blank.");
+                alert("Username and password fields must not be blank.");
             }
         } catch (error) {
-            alert("Error occurred while uploading.");
+            alert("Error occurred while signing up .");
         }
     };
 
 
     return (
-        <div className="flex flex-col items-center p-4 pt-8 w-[100vw] sm:pl-[75px] sm:flex-row sm:justify-around  sm:items-start">
+        <div className="flex flex-col items-center p-4 pt-8 w-[100vw]">
             <Form {...form}>
                 <form onSubmit={handleSubmit} className="space-y-8 w-[250px]">
                     <div className="flex flex-row">
