@@ -9,13 +9,20 @@ const BACKEND_URL = "http://localhost:8080/"
 
 function App() {
 
+
+
   return (
     <>
       <Routes >
-      <Route path="/sign-up" element={<SignUpForm backendUrl = {BACKEND_URL}/>} />
+        <Route path="/sign-up"
+          element={<SignUpForm
+            backendUrl={BACKEND_URL}
 
-        <Route path="/" element={<Home backendUrl = {BACKEND_URL}/>} />
-        <Route path="/add" element={<ImageForm backendUrl={BACKEND_URL}/>}/>
+          />}
+        />
+
+        <Route path="/" element={<Home backendUrl={BACKEND_URL} />} />
+        <Route path="/add" element={<ImageForm backendUrl={BACKEND_URL} />} />
       </Routes>
 
     </>
