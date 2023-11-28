@@ -5,6 +5,8 @@ import { Button } from "../@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../@/components/ui/form"
 import { Input } from "../@/components/ui/input"
 import { useNavigate } from "react-router-dom";
+import { faImages } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface imageFormProps {
     backendUrl: string;
@@ -65,8 +67,16 @@ const SignUpForm: React.FC<imageFormProps> = ({ backendUrl }) => {
 
     return (
         <div className="flex flex-col items-center p-4 pt-8 w-[100vw] sm:pl-[75px] sm:flex-row sm:justify-around  sm:items-start">
+
+
             <Form {...form}>
-                <form className="space-y-8 w-[250px]">
+                <form className="space-y-8 w-[250px]" >
+                <div className="flex justify-center items-center text-xl mx-4 cursor-pointer">
+                    <FontAwesomeIcon icon={faImages} className="h-[25px] mr-2 " />
+                    <p className=" font-semibold">PhotoStore</p>
+                </div>
+                <p className = "text-center text-sm">Log in to continue.</p>
+
                     <div className="flex flex-row">
                         <Button variant={isLogin ? `default` : "outline"} onClick={() => setIsLogin(true)} className="flex w-full mr-1" type="button">Login</Button>
                         <Button variant={isLogin ? `outline` : "default"} onClick={() => setIsLogin(false)} className="flex w-full ml-1" type="button" >Register</Button>
