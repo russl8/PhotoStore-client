@@ -34,6 +34,7 @@ const SignUpForm: React.FC<imageFormProps> = ({ backendUrl }) => {
             .then(data => {
                 localStorage.setItem('username', data.userName);
                 localStorage.setItem('userid',data.userId);
+                navigate("/")
 
             })
             .catch(error => {
@@ -51,7 +52,9 @@ const SignUpForm: React.FC<imageFormProps> = ({ backendUrl }) => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
+                localStorage.setItem('username', data.userName);
+                localStorage.setItem('userid',data.userId);
+                navigate("/")
             })
             .catch(error => {
                 alert("A problem occurred with creating user.")
