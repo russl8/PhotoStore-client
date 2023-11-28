@@ -25,7 +25,6 @@ const formSchema = z.object({
 const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [title, setTitle] = useState<string>("");
-    const [userid, setUserid] = useState<string>("6552e9e91bf5e44bccb5b5f8");
     const navigate = useNavigate();
     const form = useForm<z.infer<typeof formSchema>>({
     })
@@ -47,7 +46,9 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
         const formData = new FormData();
 
         //TODO: get current userid.
-        formData.append("userid", userid);
+
+        
+        formData.append("userid", localStorage.getItem('userid') ?? '');
         formData.append("title", title);
         formData.append("image", selectedImage);
 
