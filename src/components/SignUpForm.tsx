@@ -35,7 +35,7 @@ const SignUpForm: React.FC<imageFormProps> = ({ backendUrl }) => {
             .then(response => response.json())
             .then(data => {
                 localStorage.setItem('username', data.userName);
-                localStorage.setItem('userid',data.userId);
+                localStorage.setItem('userid', data.userId);
                 navigate("/")
 
             })
@@ -55,7 +55,7 @@ const SignUpForm: React.FC<imageFormProps> = ({ backendUrl }) => {
             .then(response => response.json())
             .then(data => {
                 localStorage.setItem('username', data.userName);
-                localStorage.setItem('userid',data.userId);
+                localStorage.setItem('userid', data.userId);
                 navigate("/")
             })
             .catch(error => {
@@ -71,11 +71,11 @@ const SignUpForm: React.FC<imageFormProps> = ({ backendUrl }) => {
 
             <Form {...form}>
                 <form className="space-y-8 w-[250px]" >
-                <div className="flex justify-center items-center text-xl mx-4 cursor-pointer">
-                    <FontAwesomeIcon icon={faImages} className="h-[25px] mr-2 " />
-                    <p className=" font-semibold">PhotoStore</p>
-                </div>
-                <p className = "text-center text-sm">Log in to continue.</p>
+                    <div className="flex justify-center items-center text-xl mx-4 cursor-pointer">
+                        <FontAwesomeIcon icon={faImages} className="h-[25px] mr-2 " />
+                        <p className=" font-semibold">PhotoStore</p>
+                    </div>
+                    <p className="text-center text-sm">Log in to continue.</p>
 
                     <div className="flex flex-row">
                         <Button variant={isLogin ? `default` : "outline"} onClick={() => setIsLogin(true)} className="flex w-full mr-1" type="button">Login</Button>

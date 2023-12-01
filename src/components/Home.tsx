@@ -12,8 +12,13 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
     const [allPhotos, setAllPhotos] = React.useState<any[]>([]);
     const navigate = useNavigate();
 
+
+    /**
+     * check if user exists in local storage, and if the user actually exists in the database. 
+     * if so, make that the current user and fetch all photos by that user.
+     * if user is not valid, sign them out and take them to login page.
+     */
     React.useEffect(() => {
-        //check if user exists in local storage.
         tempUsername = localStorage.getItem("username");
 
         // see if user exists in db.
@@ -23,6 +28,8 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
                 .then(data => {
                     localStorage.setItem('username', data.userName);
                     localStorage.setItem('userid', data.userId);
+                    fetchPhotos();
+
                 })
                 .catch(error => {
                     localStorage.setItem('username', "");
@@ -33,12 +40,6 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
 
     }, [])
 
-
-
-    React.useEffect(() => {
-        //TODO:  fetch photos of USER.
-        fetchPhotos();
-    }, []);
     const fetchPhotos = () => {
         fetch(backendUrl + `user/${localStorage.getItem('userid')}`)
             .then(response => response.json())
