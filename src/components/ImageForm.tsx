@@ -23,6 +23,25 @@ const formSchema = z.object({
 })
 
 const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
+    React.useEffect(() => {
+        let tempUsername = localStorage.getItem("username");
+        // see if user exists in db.
+        if (tempUsername !== null) {
+            fetch(`${backendUrl}${tempUsername}`)
+                .then(response => response.json())
+                .then(data => {
+                    localStorage.setItem('username', data.userName);
+                    localStorage.setItem('userid', data.userId);
+                })
+                .catch(error => {
+                    localStorage.setItem('username', "");
+                    localStorage.setItem('userid', "");
+                    navigate("/sign-up")
+                });
+        }
+
+    }, [])
+
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [title, setTitle] = useState<string>("");
     const navigate = useNavigate();
