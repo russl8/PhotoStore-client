@@ -2,7 +2,6 @@ import React from "react"
 import HomeSidebar from "./HomeSidebar";
 import HomeHeader from "./HomeHeader";
 import PhotoDisplay from "./PhotoDisplay";
-import { useNavigate } from "react-router-dom";
 
 interface homeProps {
     backendUrl: string;
@@ -10,19 +9,11 @@ interface homeProps {
 let tempUsername
 const Home: React.FC<homeProps> = ({ backendUrl }) => {
     const [allPhotos, setAllPhotos] = React.useState<any[]>([]);
-    const navigate = useNavigate();
 
-
-    /**
-     * check if user exists in local storage, and if the user actually exists in the database. 
-     * if so, make that the current user and fetch all photos by that user.
-     * if user is not valid, sign them out and take them to login page.
-     */
     React.useEffect(() => {
         tempUsername = localStorage.getItem("username");
-
-        // see if user exists in db.
-        if (tempUsername !== null) {
+        // see if user exists in db. if so, fetch all photos by user.
+        if (tempUsername !== null || tempUsername !== "") {
             fetch(`${backendUrl}${tempUsername}`)
                 .then(response => response.json())
                 .then(data => {
@@ -34,7 +25,7 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
                 .catch(error => {
                     localStorage.setItem('username', "");
                     localStorage.setItem('userid', "");
-                    navigate("/sign-up")
+                    window.location.href = "/sign-up"
                 });
         }
 

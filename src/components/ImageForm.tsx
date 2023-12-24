@@ -36,7 +36,7 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
                 .catch(error => {
                     localStorage.setItem('username', "");
                     localStorage.setItem('userid', "");
-                    navigate("/sign-up")
+                    window.location.href = "/sign-up"
                 });
         }
 
@@ -66,7 +66,7 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
 
         //TODO: get current userid.
 
-        
+
         formData.append("userid", localStorage.getItem('userid') ?? '');
         formData.append("title", title);
         formData.append("image", selectedImage);

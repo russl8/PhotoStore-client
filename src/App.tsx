@@ -6,40 +6,31 @@ import ImageForm from './components/ImageForm';
 import SignUpForm from './components/SignUpForm';
 
 const BACKEND_URL = "http://localhost:8080/"
-let tempUsername;
-
+const verifyUser = (useNav:any) => {
+  //check if user exists in local storage.
+  let tempUsername = localStorage.getItem("username");
+  // if so, then see if user exists in db.
+  if (tempUsername !== null && tempUsername !== "") {
+    fetch(`${BACKEND_URL}${tempUsername}`)
+      .then(response => response.json())
+      .then(data => {
+        localStorage.setItem('username', data.userName);
+        localStorage.setItem('userid', data.userId);
+        window.location.href = "/sign-up"
+      })
+      .catch(error => {
+        localStorage.setItem('username', "");
+        localStorage.setItem('userid', "");
+      });
+  }
+}
 function App() {
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    //check if user exists in local storage.
-    tempUsername = localStorage.getItem("username");
-
-    // see if user exists in db.
-    if (tempUsername !== null && tempUsername !== "") {
-      fetch(`${BACKEND_URL}${tempUsername}`)
-        .then(response => response.json())
-        .then(data => {
-          localStorage.setItem('username', data.userName);
-          localStorage.setItem('userid', data.userId);
-          navigate("/");
-        })
-        .catch(error => {
-          localStorage.setItem('username', "");
-          localStorage.setItem('userid', "");
-        });
-    }
-
-  },[])
-
-
   return (
     <>
       <Routes >
         <Route path="/sign-up"
           element={<SignUpForm
             backendUrl={BACKEND_URL}
-
           />}
         />
         <Route path="/" element={<Home backendUrl={BACKEND_URL} />} />
