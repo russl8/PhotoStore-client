@@ -5,7 +5,7 @@ import Home from './components/Home';
 import ImageForm from './components/ImageForm';
 import SignUpForm from './components/SignUpForm';
 
-const BACKEND_URL = "http://localhost:8080/"
+const BACKEND_URL = "https://photostore-server.onrender.com/"
 const verifyUser = (useNav:any) => {
   //check if user exists in local storage.
   let tempUsername = localStorage.getItem("username");
