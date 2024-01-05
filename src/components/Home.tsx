@@ -29,7 +29,7 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
                 });
         }
 
-    }, [])
+    })
 
     const fetchPhotos = () => {
         fetch(backendUrl + `user/${localStorage.getItem('userid')}`)
