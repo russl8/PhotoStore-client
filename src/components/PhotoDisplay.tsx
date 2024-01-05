@@ -1,6 +1,5 @@
 import React from "react";
 import PhotoCard from "./PhotoCard";
-import ImageForm from "./ImageForm";
 import { nanoid } from "nanoid";
 
 interface photoDisplayProps {

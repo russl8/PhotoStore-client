@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { Button } from "../@/components/ui/button";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../@/components/ui/form"
 import { Input } from "../@/components/ui/input"
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -40,7 +40,7 @@ const ImageForm: React.FC<imageFormProps> = ({ backendUrl }) => {
                 });
         }
 
-    }, [])
+    })
 
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [title, setTitle] = useState<string>("");
