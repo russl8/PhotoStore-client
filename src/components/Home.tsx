@@ -20,7 +20,7 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
                     localStorage.setItem('username', data.userName);
                     localStorage.setItem('userid', data.userId);
                     fetchPhotos();
-
+                    console.log("hi");
                 })
                 .catch(error => {
                     localStorage.setItem('username', "");
@@ -29,7 +29,8 @@ const Home: React.FC<homeProps> = ({ backendUrl }) => {
                 });
         }
 
-    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[backendUrl]);
 
     const fetchPhotos = () => {
         fetch(backendUrl + `user/${localStorage.getItem('userid')}`)
